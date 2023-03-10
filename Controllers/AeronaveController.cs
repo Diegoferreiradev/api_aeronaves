@@ -1,5 +1,4 @@
 ﻿using APICiaAerea.Services;
-using APICiaAerea.Validators.Aeronave;
 using APICiaAerea.ViewModels.Aeronave;
 using Microsoft.AspNetCore.Mvc;
 
