@@ -2,6 +2,7 @@ using APICiaAerea.Contexts;
 using APICiaAerea.Middlewares;
 using APICiaAerea.Services;
 using APICiaAerea.Validators.Aeronave;
+using APICiaAerea.Validators.Piloto;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,9 +14,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<CiaAreaContext>();
 builder.Services.AddTransient<AeronaveService>();
+builder.Services.AddTransient<PilotoService>();
 builder.Services.AddTransient<AdicionarAeronaveValidator>();
 builder.Services.AddTransient<AtualizarAeronaveValidator>();
 builder.Services.AddTransient<ExcluirAeronaveValidator>();
+builder.Services.AddTransient<AdicionarPilotoValidator>();
+builder.Services.AddTransient<AtualizarPilotoValidator>();
+builder.Services.AddTransient<ExcluirPilotoValidator>();
 
 
 var app = builder.Build();
