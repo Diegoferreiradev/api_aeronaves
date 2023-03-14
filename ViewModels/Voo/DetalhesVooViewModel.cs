@@ -1,4 +1,5 @@
 ﻿using APICiaAerea.ViewModels.Aeronave;
+using APICiaAerea.ViewModels.Cancelamento;
 using APICiaAerea.ViewModels.Piloto;
 
 namespace APICiaAerea.ViewModels.Voo
@@ -14,6 +15,7 @@ namespace APICiaAerea.ViewModels.Voo
         public int PilotoId { get; set; }
         public DetalhesAeronaveViewModel? Aeronave { get; set; }
         public DetalhesPilotoViewModel? Piloto { get; set; }
+        public DetalhesCancelamentoViewModel? Cancelamento { get; set; }
 
         public DetalhesVooViewModel(int id, string origem, string destino, DateTime dataHoraPartida, DateTime dataHoraChegada, int aeronaveId, int pilotoId)
         {

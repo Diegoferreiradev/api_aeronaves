@@ -2,6 +2,7 @@ using APICiaAerea.Contexts;
 using APICiaAerea.Middlewares;
 using APICiaAerea.Services;
 using APICiaAerea.Validators.Aeronave;
+using APICiaAerea.Validators.Cancelamento;
 using APICiaAerea.Validators.Piloto;
 using APICiaAerea.Validators.Voo;
 
@@ -26,6 +27,7 @@ builder.Services.AddTransient<ExcluirPilotoValidator>();
 builder.Services.AddTransient<AdicionarVooValidator>();
 builder.Services.AddTransient<AtualizarVooValidator>();
 builder.Services.AddTransient<ExcluirVooValidator>();
+builder.Services.AddTransient<CancelarVooValidator>();
 
 
 

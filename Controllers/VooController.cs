@@ -1,4 +1,5 @@
 ﻿using APICiaAerea.Services;
+using APICiaAerea.ViewModels.Cancelamento;
 using APICiaAerea.ViewModels.Voo;
 using Microsoft.AspNetCore.Mvc;
 
@@ -62,6 +63,13 @@ namespace APICiaAerea.Controllers
         {
           _vooService.ExcluirVoo(id);
             return NoContent();
+        }
+
+        [HttpPost("cancelar")]
+        public IActionResult CancelarVoo(CancelarVooViewModel dados)
+        {
+            var vooCancelado = _vooService.CancelarVoo(dados);
+            return Ok(vooCancelado);
         }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using APICiaAerea.Contexts;
 using APICiaAerea.Entities;
+using APICiaAerea.Validators.Cancelamento;
 using APICiaAerea.Validators.Voo;
 using APICiaAerea.ViewModels.Aeronave;
+using APICiaAerea.ViewModels.Cancelamento;
 using APICiaAerea.ViewModels.Piloto;
 using APICiaAerea.ViewModels.Voo;
 using FluentValidation;
@@ -15,17 +17,20 @@ namespace APICiaAerea.Services
         private readonly AdicionarVooValidator _adicionarVooValidator;
         private readonly AtualizarVooValidator _atualizarVooValidator;
         private readonly ExcluirVooValidator _excluirVooValidator;
+        private readonly CancelarVooValidator _cancelarVooValidator;
 
         public VooService(
             CiaAreaContext context,
             AdicionarVooValidator adicionarVooValidator,
             AtualizarVooValidator atualizarVooValidator,
-            ExcluirVooValidator excluirVooValidator)
+            ExcluirVooValidator excluirVooValidator,
+            CancelarVooValidator cancelarVooValidator)
         {
             _context = context;
             _adicionarVooValidator = adicionarVooValidator;
             _atualizarVooValidator = atualizarVooValidator;
             _excluirVooValidator = excluirVooValidator;
+            _cancelarVooValidator = cancelarVooValidator;
         }
 
         public DetalhesVooViewModel AdicionarVoo(AdicionarVooViewModel dados)
@@ -74,6 +79,7 @@ namespace APICiaAerea.Services
         {
             var voo = _context.Voos.Include(v => v.Aeronave)
                                    .Include(v => v.Piloto)
+                                   .Include(v => v.Cancelamento)
                                    .FirstOrDefault(v => v.Id == id);
 
             if (voo != null)
@@ -103,6 +109,17 @@ namespace APICiaAerea.Services
                     voo.Piloto.Nome,
                     voo.Piloto.Matricula
                 );
+
+                if (voo.Cancelamento != null)
+                {
+                    resultado.Cancelamento = new DetalhesCancelamentoViewModel
+                    (
+                       voo.Cancelamento.Id,
+                       voo.Cancelamento.Motivo,
+                       voo.Cancelamento.DataHoraNotificacao,
+                       voo.Cancelamento.VooId
+                    );
+                }
 
                 return resultado;
             }
@@ -145,6 +162,18 @@ namespace APICiaAerea.Services
                 _context.Voos.Remove(voo);
                 _context.SaveChanges();
             }
+        }
+
+        public DetalhesVooViewModel? CancelarVoo(CancelarVooViewModel dados)
+        {
+            _cancelarVooValidator.ValidateAndThrow(dados);
+
+            var cancelamento = new Cancelamento(dados.Motivo, dados.DataHoraNotificacao, dados.VooId);
+
+            _context.Add(cancelamento);
+            _context.SaveChanges();
+
+            return ListarVooId(dados.VooId);
         }
     }
 }
