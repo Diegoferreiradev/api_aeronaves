@@ -5,6 +5,8 @@ using APICiaAerea.Validators.Aeronave;
 using APICiaAerea.Validators.Cancelamento;
 using APICiaAerea.Validators.Piloto;
 using APICiaAerea.Validators.Voo;
+using DinkToPdf;
+using DinkToPdf.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,7 +30,7 @@ builder.Services.AddTransient<AdicionarVooValidator>();
 builder.Services.AddTransient<AtualizarVooValidator>();
 builder.Services.AddTransient<ExcluirVooValidator>();
 builder.Services.AddTransient<CancelarVooValidator>();
-
+builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 
 
 var app = builder.Build();
