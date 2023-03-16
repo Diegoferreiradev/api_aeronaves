@@ -1,6 +1,6 @@
 # api_aeronaves
 
-Desenvolvido um API para Aeronaves
+Desenvolvido uma API para Aeronaves
 
 Foi desenvolvida uma Api para cadastrar Aeronaves, com seus pilotos, voos, cancelamentos e suas respectivas manutenções.
 
